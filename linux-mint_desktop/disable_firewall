@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo "Disabling firewall"
+iptables -F
+
+sleep 1
+iptables -X ACCEPTLOG
+iptables -X DROPLOG 
+iptables -X REJECTLOG
+iptables -X RELATED_ICMP
+iptables -X SYN_FLOOD
+
+sleep 1
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
