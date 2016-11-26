@@ -1,0 +1,1 @@
+DPkg::Post-Invoke {"/bin/bash /usr/sbin/pax-bites.sh -e /etc/pax_flags_debian.config"; };
