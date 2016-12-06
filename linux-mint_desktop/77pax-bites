@@ -1,1 +1,1 @@
-DPkg::Post-Invoke {"/bin/bash /usr/bin/pax-bites.sh -e /etc/pax_flags_mint18.config"; };
+DPkg::Post-Invoke {"/bin/bash /usr/bin/pax-bites -e /etc/pax_flags_mint18.config"; };
