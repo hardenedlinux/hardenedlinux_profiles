@@ -5,7 +5,8 @@ me.bin, descriptor.bin and bios.bin are extracted from OEM rom. This me.bin we p
 Not all mainboards we've been playing with are supported by Coreboot. Coreboot supported list:
 
 * Gigabyte: GA-B75M-D3H, GA-B75M-D3V
-* Lenovo: T460, X200/x200i
+* Lenovo: T420, X220/x220i, x230
+* samsung: lumpy (chromebook xe550c22)
 
 
 Neutralized ME without Coreboot supported:
