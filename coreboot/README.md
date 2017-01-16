@@ -5,7 +5,7 @@ me.bin, descriptor.bin and bios.bin are extracted from OEM rom. This me.bin we p
 Not all mainboards we've been playing with are supported by Coreboot. Make sure you got the right one:
 
 | Mainboard            | CPU               | Tested BIOS   |
-|----------------------|-------------------|---------------|
+|:--------------------:|:-----------------:|:-------------:|
 | GA-B75M-D3H          | SandyBridge       | OEM/Coreboot  |
 | GA-B75M-D3V          | IvyBridge         | OEM/Coreboot  |
 | Lenovo T420          | IvyBridge         | OEM/Coreboot  |
