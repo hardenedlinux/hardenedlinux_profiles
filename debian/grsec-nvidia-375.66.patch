@@ -1,0 +1,125 @@
+diff -urN orig-nvidia-375.66/nvidia/nv-mmap.c nvidia-current-grsec-375.66/nvidia/nv-mmap.c
+--- orig-nvidia-375.66/nvidia/nv-mmap.c	2017-05-01 16:40:16.000000000 -0400
++++ nvidia-current-grsec-375.66/nvidia/nv-mmap.c	2017-07-12 05:25:33.286579040 -0400
+@@ -102,12 +102,12 @@
+ }
+ 
+ #if defined(NV_VM_OPERATIONS_STRUCT_HAS_ACCESS)
+-static int
++static ssize_t
+ nvidia_vma_access(
+     struct vm_area_struct *vma,
+     unsigned long addr,
+     void *buffer,
+-    int length,
++    size_t length,
+     int write
+ )
+ {
+diff -urN orig-nvidia-375.66/nvidia-drm/nvidia-drm-drv.c nvidia-current-grsec-375.66/nvidia-drm/nvidia-drm-drv.c
+--- orig-nvidia-375.66/nvidia-drm/nvidia-drm-drv.c	2017-05-01 16:37:59.000000000 -0400
++++ nvidia-current-grsec-375.66/nvidia-drm/nvidia-drm-drv.c	2017-07-12 05:33:19.957350116 -0400
+@@ -606,7 +606,7 @@
+                       DRM_CONTROL_ALLOW|DRM_RENDER_ALLOW|DRM_UNLOCKED),
+ };
+ 
+-static struct drm_driver nv_drm_driver = {
++static drm_driver_no_const nv_drm_driver __read_only = {
+ 
+     .driver_features        = DRIVER_GEM | DRIVER_PRIME | DRIVER_RENDER,
+ 
+@@ -666,6 +666,7 @@
+         return;
+     }
+ 
++    pax_open_kernel();
+     nv_drm_driver.driver_features |= DRIVER_MODESET | DRIVER_ATOMIC;
+ 
+     nv_drm_driver.master_set       = nvidia_drm_master_set;
+@@ -676,6 +677,7 @@
+     nv_drm_driver.dumb_destroy     = drm_gem_dumb_destroy;
+ 
+     nv_drm_driver.gem_vm_ops       = &nv_drm_gem_vma_ops;
++    pax_close_kernel();
+ #endif /* NV_DRM_ATOMIC_MODESET_AVAILABLE */
+ }
+ 
+diff -urN orig-nvidia-375.66/nvidia-uvm/uvm8_global.c nvidia-current-grsec-375.66/nvidia-uvm/uvm8_global.c
+--- orig-nvidia-375.66/nvidia-uvm/uvm8_global.c	2017-05-01 16:40:13.000000000 -0400
++++ nvidia-current-grsec-375.66/nvidia-uvm/uvm8_global.c	2017-07-12 05:29:41.819485171 -0400
+@@ -35,17 +35,18 @@
+ #include "nv_uvm_interface.h"
+ 
+ uvm_global_t g_uvm_global;
+-static struct UvmOpsUvmEvents g_exported_uvm8_ops;
++static struct UvmOpsUvmEvents g_exported_uvm8_ops = {
++	.startDevice = NULL,
++	.stopDevice  = NULL,
++	.isrTopHalf  = uvm8_isr_top_half,
++};
++
+ static bool g_ops_registered = false;
+ 
+ static NV_STATUS uvm8_register_callbacks(void)
+ {
+     NV_STATUS status = NV_OK;
+ 
+-    g_exported_uvm8_ops.startDevice = NULL;
+-    g_exported_uvm8_ops.stopDevice  = NULL;
+-    g_exported_uvm8_ops.isrTopHalf  = uvm8_isr_top_half;
+-
+     // Register the UVM callbacks with the main GPU driver:
+     status = uvm_rm_locked_call(nvUvmInterfaceRegisterUvmCallbacks(&g_exported_uvm8_ops));
+     if (status != NV_OK)
+diff -urN orig-nvidia-375.66/nvidia-uvm/uvm8_gpu_semaphore.c nvidia-current-grsec-375.66/nvidia-uvm/uvm8_gpu_semaphore.c
+--- orig-nvidia-375.66/nvidia-uvm/uvm8_gpu_semaphore.c	2017-05-01 16:40:13.000000000 -0400
++++ nvidia-current-grsec-375.66/nvidia-uvm/uvm8_gpu_semaphore.c	2017-07-12 05:25:33.286579040 -0400
+@@ -368,7 +368,7 @@
+     // being optimized out on non-SMP configs (we need them for interacting with
+     // the GPU correctly even on non-SMP).
+     mb();
+-    ACCESS_ONCE(*semaphore->payload) = payload;
++    ACCESS_ONCE_RW(*semaphore->payload) = payload;
+ }
+ 
+ // This function is intended to catch channels which have been left dangling in
+diff -urN orig-nvidia-375.66/nvidia-uvm/uvm_full_fault_buffer.h nvidia-current-grsec-375.66/nvidia-uvm/uvm_full_fault_buffer.h
+--- orig-nvidia-375.66/nvidia-uvm/uvm_full_fault_buffer.h	2017-05-01 16:40:13.000000000 -0400
++++ nvidia-current-grsec-375.66/nvidia-uvm/uvm_full_fault_buffer.h	2017-07-12 05:26:55.532897388 -0400
+@@ -31,6 +31,7 @@
+ #define _UVM_FULL_FAULT_BUFFER_H_
+ 
+ #include "uvmtypes.h"
++#include "linux/compiler.h"
+ 
+ #define MAXWELL_FAULT_BUFFER_A (0xb069)
+ #define MEM_RD32(a) (*(const volatile NvU32 *)(a)) 
+@@ -303,7 +304,7 @@
+     NvUvmControlPrefetch_t              controlPrefetch;
+     NvUvmTestFaultBufferOverflow_t      testFaultBufferOverflow;
+     NvUvmClearFaultBufferOverflow_t     clearFaultBufferOverflow;
+-} UvmFaultBufferOps;
++} __no_const UvmFaultBufferOps;
+ 
+ /******************************************************************************
+     uvmfull_fault_buffer_init
+diff -urN orig-nvidia-375.66/nvidia-uvm/uvm_linux.h nvidia-current-grsec-375.66/nvidia-uvm/uvm_linux.h
+--- orig-nvidia-375.66/nvidia-uvm/uvm_linux.h	2017-05-01 16:40:13.000000000 -0400
++++ nvidia-current-grsec-375.66/nvidia-uvm/uvm_linux.h	2017-07-12 05:25:33.286579040 -0400
+@@ -429,13 +429,13 @@
+ 
+ // Added in 2.6.24
+ #ifndef ACCESS_ONCE
+-  #define ACCESS_ONCE(x) (*(volatile typeof(x) *)&(x))
++  #define ACCESS_ONCE_RW(x) (*(volatile typeof(x) *)&(x))
+ #endif
+ 
+ // WRITE_ONCE/READ_ONCE have incompatible definitions across versions, which produces warnings.
+ // Therefore, we define our own macros
+-#define UVM_WRITE_ONCE(x, val) (ACCESS_ONCE(x) = (val))
+-#define UVM_READ_ONCE(x) ACCESS_ONCE(x)
++#define UVM_WRITE_ONCE(x, val) (ACCESS_ONCE_RW(x) = (val))
++#define UVM_READ_ONCE(x) ACCESS_ONCE_RW(x)
+ 
+ // Added in 3.11
+ #ifndef PAGE_ALIGNED
