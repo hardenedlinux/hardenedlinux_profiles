@@ -7,7 +7,7 @@ Not all mainboards we've been playing with are supported by Coreboot. Make sure 
 | Mainboard            | CPU               | Tested BIOS   | HAP      |
 |:--------------------:|:-----------------:|:-------------:|:--------:|
 | GA-B75M-D3H          | SandyBridge       | OEM/Coreboot  | N/A      |
-| GA-B75M-D3V          | IvyBridge         | OEM/Coreboot  | N/A      |
+| GA-B75M-D3V          | IvyBridge         | OEM/Coreboot  | Full     |
 | Lenovo T420          | IvyBridge         | OEM/Coreboot  | N/A      |
 | Lenovo X220/X220i    | SandyBridge       | OEM/Coreboot  | N/A      |
 | Lenovo X230          | IvyBridge         | OEM/Coreboot  | N/A      |
