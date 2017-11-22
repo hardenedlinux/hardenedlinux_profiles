@@ -7,7 +7,7 @@ cd $WORKDIR
 echo "###########################################################################"
 echo -e "[+] \e[93mInstalling paxctl-ng/elfix...\e[0m"
 echo "----------------------------------------------"
-sudo apt-get install -y vim libc6-dev libelf-dev libattr1-dev
+sudo apt-get install -y vim libc6-dev libelf-dev libattr1-dev git build-essential
 wget https://dev.gentoo.org/%7Eblueness/elfix/elfix-0.9.2.tar.gz && tar zxvf elfix-0.9.2.tar.gz
 cd elfix-0.9.2
 ./configure --enable-ptpax --enable-xtpax --disable-tests
