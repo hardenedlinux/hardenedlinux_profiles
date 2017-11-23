@@ -13,6 +13,8 @@ Not all mainboards we've been playing with are supported by Coreboot. Make sure 
 | Lenovo X230          | IvyBridge         | OEM/Coreboot  |            | NONE/Full           |
 | Chromebook XE550C22  | IvyBridge         | OEM/Coreboot  |            | N/A                 |
 | ASUS P10S-M WS       | Skylake           | OEM           | SPSv4.0    | Partial             |
+| Dell R630       | Broadwell           |            | SPSv3.1    |              |
+| Dell R730       | Broadwell           |            |     |              |
 
 HAP (or AltMeDisable for firmware older than ME11) is an undocumented kill switch in Intel ME being [disclosured by Mark Ermolov and Maxim Goryachy](http://blog.ptsecurity.com/2017/08/disabling-intel-me.html)( [Russian version](https://habrahabr.ru/company/pt/blog/336242/)) recently. [me_cleaner](https://github.com/corna/me_cleaner) added the support to [enable HAP/AltMeDisable bit](https://github.com/corna/me_cleaner/commit/ced3b46ba2ccd74602b892f9594763ef34671652). coreboot is working perfectly with HAP/AltMeDisable enabled. So we will only test enable HAP/AltMeDisable w/o removing ME code modules on OEM firmware and you can find the result above.
 
