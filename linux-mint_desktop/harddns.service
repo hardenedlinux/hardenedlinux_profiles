@@ -1,0 +1,11 @@
+[Unit]
+Description=harddns - DNS over HTTPS
+ConditionPathExists=/usr/local/bin/harddnsd
+ 
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/harddnsd
+ 
+[Install]
+WantedBy=multi-user.target

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WORKDIR=/tmp/mint18-grsec-configs
+WORKDIR=/tmp/mint19-grsec-configs
 mkdir -p $WORKDIR
 cd $WORKDIR
 
@@ -19,11 +19,11 @@ echo -e "[+] \e[93mDeploying configs....\e[0m"
 echo "----------------------------------------------"
 
 wget https://github.com/hardenedlinux/hardenedlinux_profiles/raw/master/linux-mint_desktop/77pax-bites
-wget https://github.com/hardenedlinux/hardenedlinux_profiles/raw/master/linux-mint_desktop/pax_flags_mint18.config
+wget https://github.com/hardenedlinux/hardenedlinux_profiles/raw/master/linux-mint_desktop/pax_flags_mint19.config
 wget https://github.com/hardenedlinux/hardenedlinux_profiles/raw/master/linux-mint_desktop/sysctl.conf
 
 sudo cp 77pax-bites /etc/apt/apt.conf.d/
-sudo cp pax_flags_mint18.config /etc/
+sudo cp pax_flags_mint19.config /etc/
 sudo cp sysctl.conf /etc/
 
 
@@ -32,6 +32,6 @@ echo -e "[+] \e[93mDeploying pax-bites...\e[0m"
 echo "----------------------------------------------"
 git clone https://github.com/hardenedlinux/pax-bites.git
 sudo cp pax-bites/pax-bites.sh  /usr/sbin/
-sudo pax-bites.sh -e /etc/pax_flags_mint18.config
+sudo pax-bites.sh -e /etc/pax_flags_mint19.config
 
 
