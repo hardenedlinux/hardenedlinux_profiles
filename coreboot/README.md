@@ -4,7 +4,7 @@ me.bin, descriptor.bin and bios.bin are extracted from OEM rom. This me.bin we p
 
 Not all mainboards we've been playing with are supported by Coreboot. Make sure you got the right one:
 
-| Mainboard            | CPU               | Tested BIOS   | ME version |HAP/Alt Disable      | BootGuard( Jail?) |
+| Mainboard            | CPU               | Tested BIOS   | ME version |HAP/AltMeDisable      | BootGuard( Jail?) |
 |:--------------------:|:-----------------:|:-------------:|:----------:|:-------------------:|:--------:|
 | GA-B75M-D3H          | SandyBridge       | OEM/Coreboot  | MEv8.1     | N/A                 |          |
 | GA-B75M-D3V          | IvyBridge         | OEM/Coreboot  | MEv8.1     | Full                |          |
@@ -13,6 +13,7 @@ Not all mainboards we've been playing with are supported by Coreboot. Make sure 
 | Lenovo X230          | IvyBridge         | OEM/Coreboot  |            | NONE/Full           |          |
 | Chromebook XE550C22  | IvyBridge         | OEM/Coreboot  |            | N/A                 |          |
 | ASUS P10S-M WS       | Skylake           | OEM           | SPSv4.0    | Partial             |          |
+| Alienware 13 R2      | Skylake           | OEM           | MEv11      | NONE                | Enabled  |
 | Alienware 13 R3      | Kabylake          | OEM           | MEv11.6    | FULL                | Disabled |
 | Dell R630            | Broadwell         |               | SPSv3.1    |                     |          |    
 | Dell R730            | Broadwell         |               | SPSv3.1    |                     | Disabled |
