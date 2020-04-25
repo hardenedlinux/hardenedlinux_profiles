@@ -1,0 +1,8 @@
+Name: default
+IncomingDir: incoming/
+TempDir: temp/
+MorgueDir: morgue/
+LogDir: incoming-logs/
+Allow: buster buster>buster-updates
+Permit: unused_files older_version
+Cleanup: unused_files on_deny on_error

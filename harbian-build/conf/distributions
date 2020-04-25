@@ -1,0 +1,38 @@
+Origin: harbian
+Label: harbian Linux Server Main Repo
+Codename: buster
+Suite: stable
+Architectures: amd64 source
+Components: main 
+UDebComponents: main
+Contents: udebs percomponent allcomponents
+Description: harbian Linux Server 
+SignWith: DA361430B802907E
+Log: harbian.log
+Update: upstream-main
+
+Origin: harbian
+Label: harbian Linux Server Main Repo
+Codename: buster-updates
+Suite: stable
+Architectures: amd64 source
+Components: main 
+UDebComponents: main
+Contents: udebs percomponent allcomponents
+Description: harbian Linux Server  updates
+SignWith: DA361430B802907E
+Log: harbian.log
+Update: upstream-main-updates
+
+Origin: harbian
+Label: harbian Linux Server Main Repo
+Codename: buster/updates
+Suite: stable
+Architectures: amd64 source
+Components: main 
+UDebComponents: main
+Contents: udebs percomponent allcomponents
+Description: harbian Linux Server  updates
+SignWith: DA361430B802907E
+Log: harbian.log
+Update: security

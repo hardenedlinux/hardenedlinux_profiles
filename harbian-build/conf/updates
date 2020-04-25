@@ -1,0 +1,24 @@
+Name: upstream-main
+Method: http://deb.debian.org/debian/
+Suite: buster
+Components: main
+Architectures: amd64 source
+GetInRelease: no
+FilterSrcList: install filterlist/debian-buster-src
+VerifyRelease: blindtrust
+
+Name: upstream-main-updates
+Method: http://deb.debian.org/debian/
+Suite: buster-updates
+Components: main
+Architectures: amd64 source
+GetInRelease: no
+FilterSrcList: install filterlist/debian-buster-src
+VerifyRelease: blindtrust
+
+Name: security
+Method: http://security.debian.org/debian-security
+Suite: buster/updates
+Components: main
+UDebComponents: main
+VerifyRelease: blindtrust

@@ -1,0 +1,2 @@
+d-i preseed/late_command string \
+    in-target /bin/bash -c '/opt/harbianaudit/bin/harbianaudit.sh' 
