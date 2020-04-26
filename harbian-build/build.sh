@@ -8,15 +8,6 @@ REPO_URL='http://deb.debian.org/debian'
 HARBIAN_SIGNING_KEY=DA361430B802907E
 WEB_IP='144.77.103.7'
 
-mkdir -p $BUILD_DIR
-cp $WORK_DIR/conf $BUILD_DIR -af
-cd $BUILD_DIR
-mkdir -p ./conf/filterlist/
-mkdir -p $BUILD_DIR/output
-touch ./conf/filterlist/debian-buster-src
-
-reprepro -V update
-
 cd $BUILD_DIR/dists/buster/main
 lftp -c mirror $REPO_URL/dists/buster/main/installer-amd64
 
