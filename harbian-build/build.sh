@@ -34,7 +34,7 @@ gpg -u $HARBIAN_SIGNING_KEY -bao Release.gpg Release
 cd $BUILD_DIR
 rm -f extrafiles
 sha256sum $(find * -type f | egrep -v '(pool|i18n|dep11|source)/|Contents-.*\.(gz|diff)|installer|binary-|(In)?Release(.gpg)?|\.changes' | sort | sed -e "/^conf/d"  -e "/^db/d") > /tmp/extrafile
-#gpg --no-options --batch --no-tty --armour --personal-digest-preferences=SHA256  --no-options --batch --no-tty --armour --default-key $HARBIAN_SIGNING_KEY --clearsign --output extrafiles /tmp/extrafile
+gpg --no-options --batch --no-tty --armour --personal-digest-preferences=SHA256  --no-options --batch --no-tty --armour --default-key $HARBIAN_SIGNING_KEY --clearsign --output extrafiles /tmp/extrafile
 
 cd $BUILD_DIR/output
 mkdir custompkg
