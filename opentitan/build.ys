@@ -1,0 +1,4 @@
+read_verilog opentitan.v
+hierarchy -check -top top_earlgrey
+synth_ice40
+write_blif out.blif
